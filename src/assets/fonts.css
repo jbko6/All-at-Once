@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'Neue Haas Grotesk';
+    src: url('./fonts/NHaasGroteskTXPro-55Rg.ttf') format('truetype'),
+         url('./fonts/NHaasGroteskTXPro-65Md.ttf') format('truetype'),
+         url('./fonts/NHaasGroteskTXPro-75Bd.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Jetbrains Mono';
+    src: url('./fonts/JetBrainsMono-Regular.woff2') format('woff2');
+}
