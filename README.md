@@ -2,6 +2,12 @@
 
 A hackathon project built for Dubhacks '25. [View the original submission here](https://devpost.com/software/work-once)
 
+![landing](./screenshots/landing.png)
+![configure integrations](./screenshots/integrations.png)
+![ai-generated worktime estimates](./screenshots/planning-time.png)
+![plan your assignment work time](./screenshots/planning.png)
+
+
 ### Inspiration
 
 Lately I've gotten really into planning my days out. I like to plan nearly every minute of my day. You'd think that this would save me time, but I've found that planning itself is eating up a good chunk of time. Of course, as a programmer, I thought to myself "I could automate this!"
