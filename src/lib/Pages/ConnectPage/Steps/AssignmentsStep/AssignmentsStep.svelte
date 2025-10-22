@@ -6,6 +6,7 @@
     import GradescopeFolder from "./GradescopeFolder.svelte";
     import { fly } from "svelte/transition";
     import { connections } from "../../../../data.svelte";
+    import DemoFolder from "./DemoFolder.svelte";
 
     let {
         advanceCallback = () => {}
@@ -14,7 +15,8 @@
     let folders: { [key: string]: Component } = {
         canvas: CanvasFolder,
         edstem: EdstemFolder,
-        gradescope: GradescopeFolder
+        gradescope: GradescopeFolder,
+        demo: DemoFolder
     };
 
     let selectedFolderIndex: string = $state(Object.keys(folders)[0]);
@@ -43,7 +45,7 @@
     </div>
 </div>
 <div class="continue-button" in:fly={{ y:20, duration:300 }}>
-    {#if connections.canvasConnected || connections.edstemConnected || connections.gradescopeConnected}
+    {#if connections.canvasConnected || connections.edstemConnected || connections.gradescopeConnected || connections.demoMode}
         <EmphasizedCenterButton text="continue" size="32px" onclick={() => advanceCallback()}></EmphasizedCenterButton>
     {/if}
 </div>

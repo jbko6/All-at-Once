@@ -4,7 +4,7 @@
     import { connections } from "../../data.svelte";
     import { fly } from "svelte/transition";
     import OpenAI from "openai";
-    import { formatDistanceToNow } from "date-fns";
+    import { addDays, formatDistanceToNow } from "date-fns";
     import EmphasizedCenterButton from "../../EmphasizedCenterButton.svelte";
     import { Calendar, TimeGrid, Interaction } from '@event-calendar/core';
 
@@ -21,31 +21,31 @@
         {
             course: "CSE 331",
             title: "Concept Check 12",
-            dueDate: new Date("2025-10-21"),
+            dueDate: addDays(new Date(), 2),
             description: "This is a quick concept check to assess your understanding of recent lecture content. You can expect it to take just a few minutes"
         },
         {
             course: "CSE 331",
             title: "At Home Worksheet 4",
-            dueDate: new Date("2025-10-24"),
+            dueDate: addDays(new Date(), 4),
             description: "This is an at-home worksheet focusing on induction proofs. Complete the problems and submit your answers via Gradescope. There are 5 problems with multiple parts."
         },
         {
             course: "CSE 351",
             title: "Lab 2 - disassembling and defusing a binary bomb",
-            dueDate: new Date("2025-10-27"),
+            dueDate: addDays(new Date(), 7),
             description: "This is your second lab assignment where you'll be disassembling a binary bomb using GDB and defusing it by providing correct inputs to each phase. There are five phases, one extra credit phase, and a secret phase. You can expect this to take several hours, so start early!"
         },
         {
             course: "CSE 390R",
             title: "Read a paper",
-            dueDate: new Date("2025-10-20"),
+            dueDate: addDays(new Date(), 3),
             description: "Find a research paper related to your project topic, read it (you can skim), and then answer a few questions regarding it. Be prepared to talk about the paper in class."
         },
         {
             course: "EDUC 251",
             title: "Complete readings",
-            dueDate: new Date("2025-10-22"),
+            dueDate: addDays(new Date(), 1),
             description: "Finish reading chapters 5 and 6 from 'Educational Psychology' and take notes on key concepts discussed in these chapters."
         }
     ];
@@ -130,7 +130,7 @@
     };
 
     onMount(() => {
-        if (!(connections.canvasConnected || connections.edstemConnected || connections.gradescopeConnected) || connections.gapiToken.length === 0) {
+        if (!(connections.canvasConnected || connections.edstemConnected || connections.gradescopeConnected || connections.demoMode) || connections.gapiToken.length === 0) {
             location.hash = "#connect";
         }
         let interval = setInterval(() => {
@@ -218,7 +218,7 @@
         console.log("Starting search from (next 15-min slot):", currentSearchTime);
         
         // Keep trying to schedule until all assignments are done or we've searched far enough
-        const maxDaysToSearch = 14;
+        const maxDaysToSearch = 7;
         const searchEndTime = new Date(currentSearchTime);
         searchEndTime.setDate(searchEndTime.getDate() + maxDaysToSearch);
         
@@ -368,11 +368,13 @@
         return finalBlocks;
     };
 
-    let calendarOptions = $state({
+    let calendarOptions: Calendar.Options = $state({
         view: 'timeGridWeek',
         height: "100%",
         headerToolbar: {start: 'title', center: '', end: ''},
         editable: false,
+        allDaySlot: false,
+        firstDay: new Date().getDay() as 0|1|2|3|4|5|6,
         eventDrop: (info: any) => {
             const evt = info?.event ?? info; // support different signatures
             const id = evt.id || evt?.extendedProps?.blockKey;

@@ -10,6 +10,7 @@ export const connections: {
     edstemConnected: boolean;
     gradescopeToken: string;
     gradescopeConnected: boolean;
+    demoMode?: boolean;
 } = $state({
     gapiInitialized: false,
     gapiToken: "",
